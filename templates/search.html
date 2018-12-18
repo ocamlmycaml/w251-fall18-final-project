@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+    <head>
+        <style>
+            table{
+                border: 1px solid black;
+            }
+
+            th, td {
+                border: 1px solid black;
+            }
+        </style>
+    </head>
+   <body>
+
+      <h2 style = "text-align: center;">Location Search Form</h2>
+
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          {% for flash in messages %}
+             <div>{{ flash }}</div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+
+
+      <form action = "http://169.45.82.9:5000/" method = post>
+         <fieldset>
+            <legend>Location Search Form</legend>
+            {{ form.hidden_tag() }}
+
+            <div style = font-size:20px; font-weight:bold; margin-left:150px;>
+               {{ form.city.label }}<br>
+               {{ form.city }}<br>
+               {{ form.state.label }}<br>
+               {{ form.state }}<br>
+               {{ form.submit }}
+            </div>
+
+         </fieldset>
+      </form>
+
+      {% if data != None %}
+      <p>Hits: {{hits}}</p>
+      <table style="border: 1px solid black;">
+          <tr>
+              <th>County</th>
+              <th>EPA Region</th>
+              <th>Pollutant</th>
+              <th>Total risk</th>
+              <th>Full Document</th>
+          </tr>
+          {% for item in data %}
+          <tr>
+              <td>{{item['_source']['county']}}</td>
+              <td>{{item['_source']['region']}}</td>
+              <td>{{item['_source']['pollutant']}}</td>
+              <td>{{item['_source']['totrisk']}}</td>
+              <td>{{item | tojson | safe}}</td>
+          </tr>
+          {% endfor %}
+      </table>
+      {% endif %}
+
+   </body>
+</html>
