@@ -79,9 +79,9 @@ for csv_file in tqdm(files):  # tqdm gives progress bars of iterators
         pollutants_json_list = pollutants_by_county.toJSON().collect()
         bulk_insert_commands = []
         for item in pollutants_json_list:
-            bulk_insert_commands.append('{"index": {"_index": "counties", "_type": "county"}}')
+            bulk_insert_commands.append('{"index": {"_index": "pollutants_by_county", "_type": "county"}}')
             bulk_insert_commands.append(item)
 
-        r = requests.post('http://169.45.85.246:9200/counties/_bulk', "\n".join(bulk_insert_commands))
+        r = requests.post('http://169.45.85.246:9200/pollutants_by_county/_bulk', "\n".join(bulk_insert_commands))
         r.raise_for_status()
 
