@@ -35,7 +35,7 @@ session.mount('https://', adapter)
 es_write_conf = {
     'es.nodes': '169.45.85.246',
     'es.port': '9200',
-    'es.resource': 'counties/county',
+    'es.resource': 'pollutants_by_county/county',
     'es.input.json': 'yes',
     'es.mapping.id': 'doc_id'
 }
